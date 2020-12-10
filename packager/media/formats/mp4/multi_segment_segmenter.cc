@@ -112,8 +112,9 @@ Status MultiSegmentSegmenter::WriteSegment() {
   } else {
     file_name = GetSegmentName(options().segment_template,
                                sidx()->earliest_presentation_time,
-                               num_segments_++, options().bandwidth);
-    file.reset(File::Open(file_name.c_str(), "w"));
+                               0, options().bandwidth);
+    num_segments_++;
+    file.reset(File::Open(file_name.c_str(), "a"));
     if (!file) {
       return Status(error::FILE_FAILURE,
                     "Cannot open file for write " + file_name);
